@@ -1,0 +1,45 @@
+spring:
+##thymeleaf
+  thymeleaf:
+    cache: false
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+##mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+##druid
+    druid:
+      filters: stat
+      initial-size: 10
+      max-active: 20
+      min-idle: 8
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      time-between-eviction-runs-millis: 60000
+##mybatis
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.demo.seckill.model
+
+##redis
+redis:
+  host: localhost
+  port: 6379
+  timeout: 3
+  password: 12345
+  poolMaxTotal: 10
+  poolMaxIdle: 10
+  poolMaxWait: 3
