@@ -10,3 +10,14 @@
     4.3.通过模板模式进行封装。接口--->抽象类--->实现类
         接口：定义契约（KeyPrefix）； 抽象类：实现共有的逻辑(BasePrefix)；  实现类：实现特有的逻辑(UserKey,OrderKey等)
     4.4.封装redis接口（RedisService），提供操作redis的常用方法
+5.数据库设计
+
+6.明文密码两次md5处理
+    用户端：pass = md5(明文 + 固定salt)
+    服务端：pass = md5(用户输入 + 随机salt)
+
+7.JSR303参数校验
+
+8.全局异常处理
+
+9.分布式session
