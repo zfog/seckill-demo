@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserDao {
 
-    User findById(int id);
+    User findById(long id);
 
-    User findByName(String name);
+    User findByName(String nickname);
 
     List<User> findAll();
 

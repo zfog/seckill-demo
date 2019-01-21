@@ -4,6 +4,8 @@
 2.集成thymeleaf，引入spring-boot-starter-thymeleaf，spring-boot-starter-web依赖
 3.集成mybatis，引入mybatis-spring-boot-starter依赖，同时还要引入mysql依赖mysql-connector-java，jdbc依赖spring-boot-starter-jdbc，
 数据库连接池依赖druid-spring-boot-starter，然后在application.yml进行相关配置
+连接mysql报错：To log in you must change it using a client that supports expired passwords问题，解决办法：先通过命令行登陆mysql，
+mysql -uroot -p123456; 然后重设密码 set password = password('123456'); 最后设置密码永不过期 alter user root@loaclhost password expire never;
 4.集成redis，引入mybatis-spring-boot-starter
     4.1.从application.yml读取配置到javabean（RedisConfig），配置redis连接池（RedisPoolFactory），并注入ioc
     4.2.通用缓存key封装，作用：防重复，避免key被覆盖
@@ -15,9 +17,15 @@
 6.明文密码两次md5处理
     用户端：pass = md5(明文 + 固定salt)
     服务端：pass = md5(用户输入 + 随机salt)
+    引入依赖commons-codec，commons-codec
 
 7.JSR303参数校验
-
+    引入依赖spring-boot-starter-validation，
+    在controller需要校验的入参前加上 @Valid注解
+    在对应的model中需要校验的属性上加上注解，例如某属性不能为空，加上@NotNull
+    可以自定义注解来校验参数，需要给自定义的注解指定校验类，@Constraint(validatedBy = {IsMobileValidator.class})，
+    IsMobileValidator类需要实现ConstraintValidator<A extends Annotation, T>接口，A为自定义的注解，T为需要校验的属性的类型
 8.全局异常处理
-
+    自定义异常处理类GlobleExceptionHandler，添加注解@RestControllerAdvice，在该类中添加捕获异常的方法，如：exceptionHandler并添加
+    注解@ExceptionHandler(value = Exception.class)，其中value指定需要拦截的异常类型，这里指定了拦截Exception.class类型
 9.分布式session

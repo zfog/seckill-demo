@@ -7,48 +7,86 @@
      </sql>
 
     <sql id="BASE_COLUMN">
-        id,name
+        id,nickname,password,salt,head,register_date,last_login_date,login_count
     </sql>
 
     <resultMap id="BaseResultMap" type="com.demo.seckill.model.User">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="head" property="head" jdbcType="VARCHAR"/>
+        <result column="register_date" property="registerDate" jdbcType="VARCHAR"/>
+        <result column="last_login_date" property="lastLoginDate" jdbcType="VARCHAR"/>
+        <result column="login_count" property="loginCount" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-          <include refid="BASE_COLUMN"/>
+        <include refid="BASE_COLUMN"/>
         from
-          <include refid="BASE_TABLE"/>
+        <include refid="BASE_TABLE"/>
         where
-          id = #{id, jdbcType=INTEGER}
+        id = #{id, jdbcType=INTEGER}
     </select>
 
     <select id="findAll" resultMap="BaseResultMap">
         select
-          <include refid="BASE_TABLE"/>
+        <include refid="BASE_TABLE"/>
         from
-          <include refid="BASE_COLUMN"/>
+        <include refid="BASE_COLUMN"/>
     </select>
 
     <insert id="insertUser" parameterType="com.demo.seckill.model.User">
         insert into
-          <include refid="BASE_TABLE"/>
-          <trim prefix="(" suffix=")" suffixOverrides=",">
-              <if test="id != null">
-                  id,
-              </if>
-              <if test="name ! null">
-                  name,
-              </if>
-          </trim>
-          <trim prefix="values(" suffix=")" suffixOverrides=",">
-              <if test="id != null">
-                  #{id, jdbcType=INTEGER},
-              </if>
-              <if test="name != null">
-                  #{name, jdbcType=VARCHAR},
-              </if>
-          </trim>
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nickname ! null">
+                nickname,
+            </if>
+            <if test="password ! null">
+                password,
+            </if>
+            <if test="salt ! null">
+                salt,
+            </if>
+            <if test="head ! null">
+                head,
+            </if>
+            <if test="registerDate ! null">
+                register_date,
+            </if>
+            <if test="lastLoginDate ! null">
+                last_login_date,
+            </if>
+            loginCount,
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=BIGINT},
+            </if>
+            <if test="nickname ! null">
+                #{nickname, jdbcType=VARCHAR},
+            </if>
+            <if test="password ! null">
+                #{password, jdbcType=VARCHAR},
+            </if>
+            <if test="salt ! null">
+                #{salt, jdbcType=VARCHAR},
+            </if>
+            <if test="head ! null">
+                #{head, jdbcType=VARCHAR},
+            </if>
+            <if test="registerDate ! null">
+                #{registerDate, jdbcType=DATE},
+            </if>
+            <if test="lastLoginDate ! null">
+                #{lastLoginDate, jdbcType=DATE},
+            </if>
+            0,
+        </trim>
     </insert>
 </mapper>

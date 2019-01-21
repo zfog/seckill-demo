@@ -6,6 +6,7 @@ import com.demo.seckill.service.UserService;
 import com.demo.seckill.model.User;
 import com.demo.seckill.result.CodeMsg;
 import com.demo.seckill.result.Result;
+import com.demo.seckill.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,59 +22,27 @@ public class SecKillDemoController {
     @Autowired
     RedisService redisService;
 
-    @GetMapping("/hello")
-    public Result<String> hello() {
-        return Result.success("hello");
+    public User findById(Integer id){
+        return userService.findById(id);
     }
 
-    @GetMapping("/helloError")
-    public Result<String> helloError() {
-        return Result.error(CodeMsg.SERVER_ERROR);
-    }
+//    public CodeMsg login(LoginVo loginVo){
+//        if(loginVo == null){
+//            return CodeMsg.SERVER_ERROR;
+//        }
+//        String mobile = loginVo.getMobile();
+//        String password = loginVo.getPassword();
+//        User user = findById(Integer.valueOf(mobile));
+//        if(user == null){
+//            return CodeMsg.MOBILE_NOT_EXIST;
+//        }
+//    }
 
-    @GetMapping("/thymeleaf")
-    public String thymeleaf(Model model) {
-        model.addAttribute("name", "thymeleaf");
-        return "helloThymeleaf";
-    }
-
-    @RequestMapping("/test")
-    public String test(Model model) {
-        model.addAttribute("name", "seckill");
-        return "test";
-    }
-
-    @RequestMapping("/dbGet/{id}")
-    @ResponseBody
-    public Result<User> dbGet(@PathVariable("id") int id) {
-        User user = userService.findById(id);
-        return Result.success(user);
-    }
-
-    @RequestMapping("/dbInsert/{name}")
-    @ResponseBody
-    public Result<Integer> dbInsert(@PathVariable("name") String name) {
-        User user = new User();
-        user.setName(name);
-        int result = userService.insertUser(user);
-        return Result.success(result);
-    }
-
-    @RequestMapping("/redis/set")
-    @ResponseBody
-    public Result<Boolean> redisSet() {
-        User user = new User();
-        user.setId(1);
-        user.setName("test1");
-        boolean b = redisService.set(UserKey.getById, String.valueOf(1), user);
-        return Result.success(b);
-    }
-
-    @RequestMapping("/redis/get")
-    @ResponseBody
-    public Result<String> redisGet() {
-        String str = redisService.get(UserKey.getById, "" + 1, String.class);
-        return Result.success(str);
-    }
+//    @RequestMapping("/redis/get")
+//    @ResponseBody
+//    public Result<String> redisGet() {
+//        String str = redisService.get(UserKey.getById, "" + 1, String.class);
+//        return Result.success(str);
+//    }
 
 }
