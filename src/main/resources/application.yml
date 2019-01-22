@@ -33,6 +33,14 @@ spring:
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.demo.seckill.model
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com:
+      demo:
+        seckill:
+          dao: debug
 
 ##redis
 redis:

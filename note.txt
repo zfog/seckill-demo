@@ -13,6 +13,7 @@ mysql -uroot -p123456; 然后重设密码 set password = password('123456'); 最
         接口：定义契约（KeyPrefix）； 抽象类：实现共有的逻辑(BasePrefix)；  实现类：实现特有的逻辑(UserKey,OrderKey等)
     4.4.封装redis接口（RedisService），提供操作redis的常用方法
 5.数据库设计
+    用户表，商品表，秒杀商品表，订单表，秒杀订单表
 
 6.明文密码两次md5处理
     用户端：pass = md5(明文 + 固定salt)
@@ -29,3 +30,5 @@ mysql -uroot -p123456; 然后重设密码 set password = password('123456'); 最
     自定义异常处理类GlobleExceptionHandler，添加注解@RestControllerAdvice，在该类中添加捕获异常的方法，如：exceptionHandler并添加
     注解@ExceptionHandler(value = Exception.class)，其中value指定需要拦截的异常类型，这里指定了拦截Exception.class类型
 9.分布式session
+    1.生成token，并存入redis
+    2.从redis中取出token

@@ -53,22 +53,30 @@ public class UserService {
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
 //        return CodeMsg.SUCCESS;
-
         //生成cookie
         String token = UUIDUtil.uuid();
+        addCookie(response, token, user);
+        return true;
+    }
+
+    private void addCookie(HttpServletResponse response,String token, User user) {
         redisService.set(UserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(UserKey.token.expireSecond());
         cookie.setPath("/");
         response.addCookie(cookie);
-        return true;
     }
 
 
-    public User getByToken(String token) {
+    public User getByToken(HttpServletResponse response, String token) {
         if(StringUtils.isEmpty(token)){
             return null;
         }
-        return redisService.get(UserKey.token, token, User.class);
+        User user = redisService.get(UserKey.token, token, User.class);
+        //延长有效期
+        if(user != null) {
+            addCookie(response, token, user);
+        }
+        return user;
     }
 }

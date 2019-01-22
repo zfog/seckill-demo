@@ -12,7 +12,7 @@ public class CodeMsg {
      * 服务器异常 5001xx
      */
     public static CodeMsg SUCCESS = new CodeMsg(0, "success");
-    public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "serer_error");
+    public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "server_error");
     public static CodeMsg BIND_ERROR = new CodeMsg(500100, "参数校验异常：%s");
 
     /**
