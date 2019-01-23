@@ -34,7 +34,7 @@ public class SeckillGoods {
         this.seckillPrice = seckillPrice;
     }
 
-    public Integer getStockCount() {
+    public Integer getStockCount(int i) {
         return stockCount;
     }
 

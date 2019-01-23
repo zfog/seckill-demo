@@ -34,6 +34,12 @@ public class CodeMsg {
      * 订单模块异常 5004xx
      */
 
+    /**
+     * 秒杀模块异常 5005xx
+     */
+    public static CodeMsg SOLD_OUT = new CodeMsg(500501, "商品已售罄");
+    public static CodeMsg REPEATABLE_SECKILL = new CodeMsg(500502, "不能重复秒杀");
+
     private CodeMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;

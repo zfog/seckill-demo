@@ -10,7 +10,7 @@
         id,goods_name,goods_title,good_img,goods_detail,goods_price,goods_stock
     </sql>
 
-    <resultMap id="BaseResultMap" type="com.demo.seckill.model.User">
+    <resultMap id="BaseResultMap" type="com.demo.seckill.model.Goods">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
         <result column="goods_title" property="goodsTitle" jdbcType="VARCHAR"/>
@@ -28,4 +28,5 @@
         select g.*, sg.seckill_price, sg.stock_count, sg.start_date, sg.end_date from t_seckill_goods sg left join t_goods g
           on sg.goods_id = g.id where g.id = #{goodsId}
     </select>
+
 </mapper>

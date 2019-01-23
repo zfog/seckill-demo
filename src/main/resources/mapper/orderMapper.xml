@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.seckill.dao.OrderDao">
+
+    <sql id="BASE_TABLE">
+         t_order
+     </sql>
+
+    <insert id="insertOrder" parameterType="com.demo.seckill.model.Order">
+        insert into 
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="deliveryAddrId != null">
+                delivery_Addr_Id,
+            </if>
+            <if test="goodsName != null">
+                goods_Name,
+            </if>
+            <if test="goodsCount != null">
+                goods_Count,
+            </if>
+            <if test="goodsPrice != null">
+                goods_Price,
+            </if>
+            <if test="orderChannel != null">
+                order_Channel,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createDate != null">
+                create_Date,
+            </if>
+            <if test="payDate != null">
+                pay_Date,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId},
+            </if>
+            <if test="deliveryAddrId != null">
+                #{deliveryAddrId},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName},
+            </if>
+            <if test="goodsCount != null">
+                #{goodsCount},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice},
+            </if>
+            <if test="orderChannel != null">
+                #{orderChannel},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="payDate != null">
+                #{payDate},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

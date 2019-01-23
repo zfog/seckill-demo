@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.seckill.dao.SeckillOrderDao">
+
+    <sql id="BASE_TABLE">
+         t_seckill_order
+     </sql>
+
+    <select id="findSeckillOrderByUserIdAndGoodsId" parameterType="java.util.HashMap" resultType="com.demo.seckill.model.SeckillOrder">
+        select *
+          from
+          <include refid="BASE_TABLE"/>
+        where user_id = #{userId} and goods_id = #{goodsId}
+    </select>
+
+    <insert id="insertSeckillOrder" parameterType="com.demo.seckill.model.SeckillOrder">
+        insert into
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="orderId != null">
+                #{orderId},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

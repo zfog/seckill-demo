@@ -32,3 +32,4 @@ mysql -uroot -p123456; 然后重设密码 set password = password('123456'); 最
 9.分布式session
     1.生成token，并存入redis
     2.从redis中取出token
+10.JMeter压测
