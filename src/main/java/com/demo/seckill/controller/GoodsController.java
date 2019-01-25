@@ -3,8 +3,10 @@ package com.demo.seckill.controller;
 import com.demo.seckill.model.User;
 import com.demo.seckill.redis.keys.impl.GoodsKey;
 import com.demo.seckill.redis.service.RedisService;
+import com.demo.seckill.result.Result;
 import com.demo.seckill.service.GoodsService;
 import com.demo.seckill.service.UserService;
+import com.demo.seckill.vo.GoodsDetailVo;
 import com.demo.seckill.vo.GoodsVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +128,13 @@ public class GoodsController {
         return "goods_detail";
     }
 
+    /**
+     * 页面缓存
+     * @param model
+     * @param user
+     * @param goodsId
+     * @return
+     */
     @RequestMapping(value = "/to_detail_html/{goodsId}", produces = "text/html")
     @ResponseBody
     public String toDetailCache(HttpServletRequest request,
@@ -166,5 +175,34 @@ public class GoodsController {
         return html;
     }
 
+    @RequestMapping(value = "/detail/{goodsId}")
+    @ResponseBody
+    public Result<GoodsDetailVo> toDetailStatic(HttpServletRequest request,
+                                                HttpServletResponse response, Model model, User user, @PathVariable("goodsId") Long goodsId) {
+        GoodsVo goodsVo = goodsService.findGoodsVoById(goodsId);
+        long startAt = goodsVo.getStartDate().getTime();
+        long endAt = goodsVo.getEndDate().getTime();
+        long now = System.currentTimeMillis();
+
+        int seckillStatus = 0;
+        int remainSeconds = 0;
+        if (now < startAt) {//秒杀还没开始，倒计时
+            seckillStatus = 0;
+            remainSeconds = (int) ((startAt - now) / 1000);
+        } else if (now > endAt) {//秒杀结束
+            seckillStatus = 2;
+            remainSeconds = -1;
+        } else {//秒杀进行中
+            seckillStatus = 1;
+            remainSeconds = 0;
+        }
+        GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
+        goodsDetailVo.setGoodsVo(goodsVo);
+        goodsDetailVo.setRemainSeconds(remainSeconds);
+        goodsDetailVo.setSeckillStatus(seckillStatus);
+        goodsDetailVo.setUser(user);
+
+        return Result.success(goodsDetailVo);
+    }
 
 }
