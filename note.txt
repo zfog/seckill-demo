@@ -33,3 +33,13 @@ mysql -uroot -p123456; 然后重设密码 set password = password('123456'); 最
     1.生成token，并存入redis
     2.从redis中取出token
 10.JMeter压测
+
+11.页面缓存
+    a.页面缓存+URL缓存+对象缓存
+      页面缓存：如商品列表页面，手动渲染页面，将渲染好的html代码以String的形式存入redis。渲染页面可以用thymeleafViewResolver提供的getTemplateEngine().process()
+      方法，此时需要在@RequestMapping注解中加入produces = "text/html"，最后返回存放了html代码的string即可
+      URL缓存：和页面缓存相同，只是在存入redis时，需要加入id以区分不同类型的页面。例如商品详情页面，通过url中不同商品有不同的
+      商品id来加载不同的页面，这时放入缓存的html也可以将这个id作为key的后缀来区分不同的页面
+12.页面静态化，前后端分离
+13.静态资源优化
+14.cdn优化
